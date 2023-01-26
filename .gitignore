@@ -2,3 +2,16 @@
 csv/
 ny_taxi_postgres_data/
 data_pgadmin
+*.tfstate
+*.tfstate.*
+**.terraform
+**.terraform.lock.*
+**google_credentials.json
+**logs/
+**.env
+**__pycache__/
+.history
+**/ny_taxi_postgres_data/*
+serving_dir
+*.csv
+.ipynb_checkpoints/
