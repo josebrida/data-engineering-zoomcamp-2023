@@ -23,13 +23,13 @@ def transform(path: Path)-> pd.DataFrame:
     return df
 
 @task()
-def write_bq(df: pd.DataFrame) -> None:
+def write_bq(df: pd.DataFrame,color: str) -> None:
     """Write data to BigQuery"""
      
     gcp_credentials_block = GcpCredentials.load("gcpzoombucketcredentials")
     
     df.to_gbq(
-        destination_table="dezoomcamp.rides",
+        destination_table=f"trips_data_all.{color}_taxi_trips",
         project_id= "luminous-cubist-375311",
         credentials= gcp_credentials_block.get_credentials_from_service_account(), 
         chunksize=500_000,
@@ -46,7 +46,7 @@ def etl_gcs_to_bq():
 
     path = extract_from_gcs(color, year, month)
     df = transform(path)
-    write_bq(df)
+    write_bq(df,color)
 
 if __name__ == "__main__":
     etl_gcs_to_bq()
